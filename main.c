@@ -6,44 +6,55 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/17 13:03:11 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:14:46 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_error(t_pipex *pipex)
-{
-	write(1, "Error.\n", 7);
-	ft_free(pipex);
-}
 
-static int	ft_check_files(t_pipex *pipex)
+void ft_buffer(t_pipex	*pipex)
 {
-	pipex->in_fd = open(pipex->argv->archivo1, O_RDONLY);
-	if (pipex->in_fd < 0)
-		ft_error(pipex);
-	pipex->out_fd = open(pipex->argv->archivo2,
-							O_CREAT | O_WRONLY | O_TRUNC,
-							0660);
-	if (pipex->out_fd < 0)
-		ft_error(pipex);
-	return (1);
-}
+	int count;
+	int temp;
+	char *buffer;
 
-void	ft_command_list(t_pipex *pipex, char **argv)
-{
-	while (*(argv + 1))
+	buffer = malloc(50 * sizeof(char));
+	count = 0;
+	temp = 1;
+	while (temp)
 	{
-		ft_pipex_lstadd_back(&pipex->argv->command,
-								ft_pipex_lstnew(*argv));
-		argv++;
+		temp = read(pipex->in_fd, buffer, 50);
+		count += temp;
+	}
+	free(buffer);
+	buffer = malloc(count * sizeof(char));
+}
+
+void ft_pipex(t_pipex	*pipex)
+{
+	pid_t pid;
+	int fd[2];
+
+	pipe(fd);
+	pid = fork();
+	ft_buffer(pipex);
+	if (pid == 0)
+	{
+		close(fd[0]);
+		printf("Hijo\n");
+	}
+	else
+	{
+		printf("Padre\n");
+		exit (0);
 	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_pipex	*pipex;
+
 
 	if (argc == 5)
 	{
@@ -53,6 +64,7 @@ int	main(int argc, char **argv)
 		pipex->argv->archivo2 = argv[argc - 1];
 		ft_command_list(pipex, &argv[2]);
 		ft_check_files(pipex);
+		ft_pipex(pipex);
 		ft_free(pipex);
 	}
 	return (0);

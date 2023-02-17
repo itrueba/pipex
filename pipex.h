@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:47:45 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/17 13:02:42 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:11:13 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef struct s_pipex
 }						t_pipex;
 
 void					ft_free(t_pipex *pipex);
+void					ft_error(t_pipex *pipex);
+
+void					ft_command_list(t_pipex *pipex, char **argv);
+int						ft_check_files(t_pipex *pipex);
 
 void					ft_pipex_lstadd_back(t_command **lst, t_command *new);
 t_command				*ft_pipex_lstnew(char *content);
