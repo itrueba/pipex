@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/22 16:30:31 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:47:28 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,26 @@
 void	ft_command(t_pipex *pipex)
 {
 	const char	*slash;
-	char		*ptr;
+	char		*path;
+	char		*command;
 	int			count;
 
 	slash = "/";
 	while (pipex->argv->command->content)
 	{
-		
 		count = 0;
 		while (pipex->argv->envp[count])
 		{
-			printf("%s\n", pipex->argv->envp[count]);
-			ptr = ft_strjoin(ft_strjoin(*pipex->argv->envp[count], slash),
-								*ft_split(pipex->argv->command->content, ' '));
-			if (access(ptr, F_OK) == 0)
-			{
-				printf("%s\n", ptr);
-				break ;
-			}
+			path = ft_strjoin(pipex->argv->envp[count], slash);
+			command = *ft_split(pipex->argv->command->content, ' ');
+			if (access(ft_strjoin(path, command), F_OK) == 0)
+			 	break ;
 			count++;
 		}
+		
+		printf("%s%s\n", path, command);
 		pipex->argv->command++;
+		printf("%s\n", pipex->argv->command->content);
 	}
 }
 
