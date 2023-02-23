@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:03:26 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/17 12:25:53 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:17:27 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_pipex_lstadd_back(t_command **lst, t_command *new)
 		*lst = new;
 }
 
-t_command	*ft_pipex_lstnew(char *content)
+t_command	*ft_pipex_lstnew(char *content, t_pipex *pipex)
 {
 	t_command	*s_command;
 
@@ -41,6 +41,7 @@ t_command	*ft_pipex_lstnew(char *content)
 	if (!s_command)
 		return (NULL);
 	s_command->content = content;
+	s_command->command_path = ft_path(pipex, ft_split(content, ' '));
 	s_command->next = NULL;
 	return (s_command);
 }

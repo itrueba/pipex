@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:47:45 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/22 15:52:44 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:26:23 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,34 @@
 
 typedef struct s_command
 {
-	char const			*content;
+	char				*content;
+	char				*command_path;
 	struct s_command	*next;
 
 }						t_command;
 
-typedef struct s_argv
+typedef struct s_pipex
 {
-	struct s_command	*command;
+	int					argc;
 	char				*archivo1;
 	char				*archivo2;
 	char				**envp;
-}						t_argv;
-
-typedef struct s_pipex
-{
-	struct s_argv		*argv;
 	int					in_fd;
 	int					out_fd;
 	int					fd[2];
-	char				**command;
+	struct s_command	**command;
 }						t_pipex;
 
 void					ft_free(t_pipex *pipex);
+void					ft_split_free(char **split);
 void					ft_error(t_pipex *pipex);
 
 void					ft_command_list(t_pipex *pipex, char **argv);
 int						ft_check_files(t_pipex *pipex);
 
+char					*ft_path(t_pipex *pipex, char **command);
+char					*ft_find_path(char **envp);
 void					ft_pipex_lstadd_back(t_command **lst, t_command *new);
-t_command				*ft_pipex_lstnew(char *content);
+t_command				*ft_pipex_lstnew(char *content, t_pipex *pipex);
 
 #endif

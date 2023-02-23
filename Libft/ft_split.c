@@ -6,13 +6,13 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 09:22:57 by itrueba-          #+#    #+#             */
-/*   Updated: 2022/12/15 10:58:30 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:18:52 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count_size(char const *s, char c)
+static int	ft_count_size(char *s, char c)
 {
 	int	count;
 	int	trigger;
@@ -33,7 +33,7 @@ static int	ft_count_size(char const *s, char c)
 	return (count);
 }
 
-static int	ft_size_word(char const *s, char c, int start)
+static int	ft_size_word(char *s, char c, int start)
 {
 	int	end;
 
@@ -57,7 +57,7 @@ static char	**ft_free(char **split, size_t word)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**split;
 	size_t	n_word;
