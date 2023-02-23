@@ -6,13 +6,13 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:05:05 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/23 15:34:20 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:50:55 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_path(t_pipex *pipex, char **command)
+char	*ft_path(t_pipex *pipex, char *command)
 {
 	const char	*slash;
 	char		*path;
@@ -24,9 +24,8 @@ char	*ft_path(t_pipex *pipex, char **command)
 	while (pipex->envp[count])
 	{
 		path = ft_strjoin(pipex->envp[count], slash);
+		path_command = ft_strjoin(path, command);
 		free(path);
-		path_command = ft_strjoin(path, *command);
-		ft_split_free(command);
 		if (access(path_command, F_OK) == 0)
 			return (path_command);
 		free(path_command);

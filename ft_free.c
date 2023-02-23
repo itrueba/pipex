@@ -6,24 +6,11 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/23 15:33:14 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:05:41 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_split_free(char **split)
-{
-	char	*temp_split;
-
-	while (split)
-	{
-		temp_split = *split;
-		free(temp_split);
-		split++;
-	}
-	free(split);
-}
 
 void	ft_free(t_pipex *pipex)
 {
@@ -38,9 +25,9 @@ void	ft_free(t_pipex *pipex)
 	{
 		temp_command = command;
 		free(command->command_path);
-		free(command);
 		command = temp_command->next;
 	}
+	free(command);
 	while (*envp)
 	{
 		temp_envp = *envp;
