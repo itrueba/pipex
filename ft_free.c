@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:02:41 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:19:06 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ void ft_free_env(t_pipex *pipex)
 	free(pipex->envp);
 }
 
+void ft_free_command_content(char **content)
+{
+	char		*temp_content;
+
+	while (*content)
+	{
+		temp_content = *content;
+		free(temp_content);
+		content++;
+	}
+}
+
 void ft_free_command(t_pipex *pipex)
 {
 	t_command	*temp_comman;
@@ -45,6 +57,8 @@ void ft_free_command(t_pipex *pipex)
 	{
 		temp_comman = *pipex->command;
 		*pipex->command = (*pipex->command)->next;
+		ft_free_command_content(temp_comman->content);
+		free(temp_comman->content);
 		free(temp_comman->command_path);
 		free(temp_comman);
 	}

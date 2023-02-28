@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/23 15:29:09 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:27:28 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,29 @@ void	ft_pipex(t_pipex *pipex)
 
 	dup2(pipex->in_fd, STDIN_FILENO);
 	close(pipex->in_fd);
+
 	pipe(pipex->fd);
 	pid = fork();
+	
 	if (pid == 0)
 	{
+		close(pipex->fd[READ_END]);
+		dup2(pipex->fd[WRITE_END], STDOUT_FILENO);
 		close(pipex->fd[WRITE_END]);
-		dup2(pipex->fd[1], STDOUT_FILENO);
-		close(pipex->fd[1]);
+		
+		execve((*pipex->command)->command_path, (*pipex->command)->content, pipex->envp);
 	}
 	else
 	{
 		close(pipex->fd[WRITE_END]);
 		pid = fork();
-		//pipex->argv->command++;
 		if (pid == 0)
 		{
 			close(pipex->fd[WRITE_END]);
 			dup2(pipex->fd[READ_END], STDIN_FILENO);
 			close(pipex->fd[READ_END]);
 			dup2(pipex->out_fd, STDOUT_FILENO);
+			execve((*pipex->command)->next->command_path, (*pipex->command)->next->content, pipex->envp);
 		}
 		else
 		{

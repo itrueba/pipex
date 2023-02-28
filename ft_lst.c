@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:03:26 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:06:26 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:42:46 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_command	*ft_pipex_lstnew(char *content, t_pipex *pipex)
 	if (!s_command)
 		return (NULL);
 	s_command->command_path = path;
-	s_command->content = content;
+	s_command->content = ft_split(content, ' ');
 	s_command->next = NULL;
 	return (s_command);
 }
