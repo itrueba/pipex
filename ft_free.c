@@ -6,28 +6,28 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/23 16:05:41 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:02:41 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_free(t_pipex *pipex)
+void ft_error_file(t_pipex *pipex, int n)
 {
-	t_command	*temp_command;
-	t_command	*command;
+	if (n == 0)
+		write(1, "Input File Error\n", 17);
+	else
+		write(1, "Output File Error\n", 18);
+	free(pipex);
+	exit(0);
+}
+
+void ft_free_env(t_pipex *pipex)
+{
 	char		**envp;
 	char		*temp_envp;
-
-	command = *(pipex->command);
+	
 	envp = pipex->envp;
-	while (command)
-	{
-		temp_command = command;
-		free(command->command_path);
-		command = temp_command->next;
-	}
-	free(command);
 	while (*envp)
 	{
 		temp_envp = *envp;
@@ -35,7 +35,26 @@ void	ft_free(t_pipex *pipex)
 		envp++;
 	}
 	free(pipex->envp);
+}
+
+void ft_free_command(t_pipex *pipex)
+{
+	t_command	*temp_comman;
+
+	while (*pipex->command)
+	{
+		temp_comman = *pipex->command;
+		*pipex->command = (*pipex->command)->next;
+		free(temp_comman->command_path);
+		free(temp_comman);
+	}
 	free(pipex->command);
+}
+
+void	ft_free(t_pipex *pipex)
+{
+	ft_free_env(pipex);
+	ft_free_command(pipex);
 	free(pipex);
 	exit(0);
 }

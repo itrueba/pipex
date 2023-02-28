@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/17 13:07:50 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:13:57 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,5 @@ void	ft_error(t_pipex *pipex)
 {
 	write(1, "Error.\n", 7);
 	ft_free(pipex);
+	exit(0);
 }

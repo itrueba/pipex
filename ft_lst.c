@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:03:26 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/23 16:06:25 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:06:26 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 
 char	*ft_command(char *ptr)
 {
-	int	len;
+	int		len;
+	int		count;
+	char	*str;
 
 	len = 0;
+	count = 0;
 	while (ptr[len] && ptr[len] != ' ')
 		len++;
-	ptr[len] = 0;
-	return (ptr);
+	str = malloc(len + 1);
+	while (count < len)
+	{
+		str[count] = ptr[count];
+		count++;
+	}
+	str[count] = 0;
+	return (str);
 }
 
 t_command	*ft_pipex_lstlast(t_command *lst)
@@ -45,18 +54,19 @@ void	ft_pipex_lstadd_back(t_command **lst, t_command *new)
 		else
 			*lst = new;
 	}
-	free(new);
 }
 
 t_command	*ft_pipex_lstnew(char *content, t_pipex *pipex)
 {
 	t_command	*s_command;
+	char		*path;
 
+	path = ft_path(pipex, ft_command(content));
 	s_command = (t_command *)malloc(sizeof(*s_command));
 	if (!s_command)
 		return (NULL);
+	s_command->command_path = path;
 	s_command->content = content;
-	s_command->command_path = ft_path(pipex, ft_command(content));
 	s_command->next = NULL;
 	return (s_command);
 }
