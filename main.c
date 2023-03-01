@@ -6,7 +6,7 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:14:20 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:15:00 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:37:32 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
 
-	if (argc > 2)
+	if (argc == 5)
 	{
 		pipex = malloc(sizeof(t_pipex));
 		ft_check_files(pipex, argv[1], argv[argc - 1]);

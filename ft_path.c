@@ -6,13 +6,13 @@
 /*   By: itrueba- <itrueba-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:05:05 by itrueba-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:00:50 by itrueba-         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:28:36 by itrueba-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void ft_error_path(t_pipex *pipex)
+void	ft_error_path(t_pipex *pipex)
 {
 	write(1, "Invalid Command Error.\n", 23);
 	ft_free(pipex);
